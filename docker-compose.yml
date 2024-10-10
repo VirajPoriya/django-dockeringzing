@@ -1,114 +1,3 @@
-# version: '3.8'
-
-# services:
-#   web:
-#     build: .
-#     command: python manage.py runserver 0.0.0.0:8000
-#     volumes:
-#       - .:/code
-#     ports:
-#       - "8000:8000"
-#     depends_on:
-#       - redis  # This ensures Redis starts before the web service
-#     environment:
-#       - CELERY_BROKER_URL=redis://redis:6379/0  # Use service name instead of localhost
-#       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-
-#   redis:  # Add the Redis service
-#     image: "redis:alpine"
-#     ports:
-#       - "6379:6379"
-
-#   celery:  # Add the Celery worker service
-#     build: .
-#     command: celery -A config worker --loglevel=info  
-#     volumes:
-#       - .:/code
-#     depends_on:
-#       - web  # This ensures the web service is up before Celery starts
-#       - redis  # This ensures Redis is started before the worker
-#     environment:
-#       - CELERY_BROKER_URL=redis://redis:6379/0  # Use service name instead of localhost
-#       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-
-
-# with gunicorn -------------------------------------------------------------------------------------
-
-# version: '3.8'
-
-# services:
-#   web:
-#     build: .
-#     command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application
-#     volumes:
-#       - .:/code
-#     ports:
-#       - "8000:8000"
-#     depends_on:
-#       - redis
-#     environment:
-#       - CELERY_BROKER_URL=redis://redis:6379/0
-#       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-#     restart: unless-stopped
-
-#   redis:
-#     image: "redis:alpine"
-#     ports:
-#       - "6379:6379"
-#     restart: unless-stopped
-
-#   celery:
-#     build: .
-#     command: celery -A your_project_name worker --loglevel=info
-#     volumes:
-#       - .:/code
-#     depends_on:
-#       - web
-#       - redis
-#     environment:
-#       - CELERY_BROKER_URL=redis://redis:6379/0
-#       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-#     restart: unless-stopped
-
-
-# -------------------------------------------------------------------------------------------------------
-
-# version: '3.8'
-
-# services:
-#   web:
-#     build: .
-#     command: uvicorn config.asgi:application --host 0.0.0.0 --port 8000 --workers 4
-#     volumes:
-#       - .:/code
-#     ports:
-#       - "8000:8000"
-#     depends_on:
-#       - redis  # If using Redis for Celery
-#     environment:
-#       - CELERY_BROKER_URL=redis://redis:6379/0
-#       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-
-#   redis:  # If you're using Redis with Celery
-#     image: "redis:alpine"
-#     ports:
-#       - "6379:6379"
-
-#   celery:
-#     build: .
-#     command: celery -A config worker --loglevel=info
-#     volumes:
-#       - .:/code
-#     depends_on:
-#       - web
-#       - redis
-#     environment:
-#       - CELERY_BROKER_URL=redis://redis:6379/0
-#       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-
-
-# v4--------------------------------------
-
 version: '3.8'
 
 services:
@@ -120,12 +9,12 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - redis  # If using Redis for Celery
+      - redis
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
 
-  redis:  # If you're using Redis with Celery
+  redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
@@ -141,3 +30,12 @@ services:
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"  # Add this line if you want to handle HTTPS
+    depends_on:
+      - web
