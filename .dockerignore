@@ -1,0 +1,40 @@
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+
+# Ignore virtual environment folders
+venv/
+.env/
+
+
+
+# Ignore local database and cache files
+*.db
+*.log
+*.pot
+*.po
+*.py~
+*.swp
+
+# Ignore development directories/files
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Ignore build directories
+build/
+dist/
+*.egg-info/
+.eggs/
+*.tar.gz
+*.zip
+node_modules/
+
+# Ignore Dockerfiles and docker-compose files (optional)
+docker-compose.yml
+Dockerfile
+
+

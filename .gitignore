@@ -1,0 +1,73 @@
+# Python bytecode
+*.py[cod]
+__pycache__/
+*.so
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+*.pkl
+*.pyo
+*.pyd
+
+# Local settings
+local_settings.py
+
+# macOS
+.DS_Store
+
+# Environments
+env/
+venv/
+.venv/
+env.bak/
+venv.bak/
+
+# Pyenv
+.python-version
+
+# Testing
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Migrations
+*/migrations/*
+
+# Static and media files
+/static/
+/media/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VSCode
+.vscode/
+
+# JetBrains IDEs (PyCharm, IntelliJ)
+.idea/
+
+# Celery
+celerybeat-schedule
+
+# Node.js (if you're using Node.js with Django)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Logs
+*.log
+*.out
+*.err
+
+# Security
+*.pem
