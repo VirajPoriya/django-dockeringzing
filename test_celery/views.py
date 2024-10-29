@@ -6,5 +6,6 @@ from test_celery.tasks import test_celery
 
 
 def index(request):
-    #task = test_celery.delay()
-    return HttpResponse("Hello, world. You're at the polls index.")
+    port = request.get_port()
+    
+    return HttpResponse(f"Hello, world. You're at the polls index. You're using port: {port}.")
